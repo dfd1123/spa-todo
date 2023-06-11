@@ -1,0 +1,36 @@
+[data-component="TodoListController"] {
+    .todo-control-area{
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .filter-btn-cont{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            z-index: 1;
+            transform: translateX(-50%);
+            display: flex;
+            column-gap: 4px;
+            [data-component="Button"]{
+                &.active{ 
+                    button{
+                        color: $red;
+                    }
+                }
+            }
+        }
+
+        button{
+            padding: 6px 8px;
+            font-size: 15px;
+        }
+    }
+
+    @include mobile{
+        .todo-control-area{
+            padding-top: 44px;
+        }
+    }
+}

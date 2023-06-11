@@ -1,0 +1,28 @@
+[data-component="TodoItem"] {
+    .todo-item{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 44px;
+        padding-left: 8px;
+        border-bottom: 1px solid $gray-e6;
+
+        >span{
+            display: inline-flex;
+            align-items: center;
+            height: 100%;
+            flex: 1;
+            cursor: pointer;
+            &.completed{
+                color: $gray-e6;
+                text-decoration: line-through;
+            }
+        }
+    
+        .btn-delete{
+            button{
+                padding: 4px 8px;
+            }
+        }
+    }
+}

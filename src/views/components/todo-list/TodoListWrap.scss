@@ -1,0 +1,31 @@
+[data-component="TodoListWrap"] {
+    position: relative;
+    > .dragging{
+        *{
+            user-select: none;
+        -webkit-user-drag: none;
+        }
+    }
+    [data-component="TodoItem"]{
+        user-select: none;
+        &.drag-target{
+            position:relative;
+            &::after{
+                content: '';
+                position: absolute;
+                top:0;
+                left:0;
+                z-index: 1;
+                width: 4px;
+                height: 100%;
+                background-color: greenyellow;
+            }
+        }
+        &.preview{
+            opacity: 0.4;
+        }
+        &.mirror{
+            opacity: 0.6;
+        }
+    }
+}
