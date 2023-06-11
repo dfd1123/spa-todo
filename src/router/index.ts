@@ -1,5 +1,5 @@
 import { RouteType } from '@/core/types';
-import Todo from '@/views/pages/Todo';
+import Todo from '@/views/pages/todo-list/Todo';
 
 const routes: RouteType[] = [
     { path: '/', redirect: '/todo-list' },
