@@ -18,13 +18,19 @@ export default class Component<
   public components: { [key: string]: Component } = {};
   public reqAnimationId = 0;
 
-  constructor(public $target: HTMLElement, private getProps?: P) {
+  constructor(
+    public $target: HTMLElement,
+    private getProps?: P,
+    ignoreSetEvent = false
+  ) {
     this.uid = uid++;
     this.$props = getProps || ({} as P);
 
     this.$state = observable(this.data()) as ReturnType<this['data']>;
     this.create();
     this.render();
+
+    if (!ignoreSetEvent) this.setEvent();
   }
 
   create(): void {
@@ -66,7 +72,6 @@ export default class Component<
 
     this.componentDidMount();
 
-    this.setEvent();
     setCurrentObserver(null);
   }
 
@@ -90,7 +95,11 @@ export default class Component<
   }
 
   addComponent<T extends Component>(
-    componentClass: new (el: Element, props: StateType) => T,
+    componentClass: new (
+      el: Element,
+      props: StateType,
+      ignoreSetEvent?: boolean
+    ) => T,
     props: StateType = {},
     key = ''
   ) {
@@ -111,9 +120,15 @@ export default class Component<
     const componentKeyName = `${componentClass.name}${key}`;
 
     const updateComponent = () => {
-      const component = new componentClass(el, props);
+      const oldComponent = this.components[componentKeyName];
+      const component = new componentClass(el, props, !!oldComponent);
+
       component.updateElement = updateElement;
-      this.components = { ...this.components, [componentKeyName]: component };
+
+      this.components = {
+        ...this.components,
+        [componentKeyName]: component,
+      };
     };
 
     if (el && !this.components[componentKeyName]) {
