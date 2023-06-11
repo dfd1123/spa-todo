@@ -18,11 +18,7 @@ export default class Component<
   public components: { [key: string]: Component } = {};
   public reqAnimationId = 0;
 
-  constructor(
-    public $target: HTMLElement,
-    private getProps?: P,
-    ignoreSetEvent = false
-  ) {
+  constructor(public $target: HTMLElement, private getProps?: P) {
     this.uid = uid++;
     this.$props = getProps || ({} as P);
 
@@ -30,7 +26,7 @@ export default class Component<
     this.create();
     this.render();
 
-    if (!ignoreSetEvent) this.setEvent();
+    this.setEvent();
   }
 
   create(): void {
@@ -95,11 +91,7 @@ export default class Component<
   }
 
   addComponent<T extends Component>(
-    componentClass: new (
-      el: Element,
-      props: StateType,
-      ignoreSetEvent?: boolean
-    ) => T,
+    componentClass: new (el: Element, props: StateType) => T,
     props: StateType = {},
     key = ''
   ) {
@@ -121,7 +113,7 @@ export default class Component<
 
     const updateComponent = () => {
       const oldComponent = this.components[componentKeyName];
-      const component = new componentClass(el, props, !!oldComponent);
+      const component = new componentClass(el, props);
 
       component.updateElement = updateElement;
 
@@ -141,16 +133,11 @@ export default class Component<
   }
 
   addEvent(
-    eventName: string,
+    eventName: 'click' | 'input' | 'change' | 'keypress',
     selector: string,
-    func: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    func: EventListenerOrEventListenerObject
   ) {
-    this.$target
-      .querySelector(selector)
-      .removeEventListener(eventName, func, options);
-    this.$target
-      .querySelector(selector)
-      .addEventListener(eventName, func, options);
+    const element = this.$target.querySelector(selector) as any;
+    element[`on${eventName}`] = func;
   }
 }
