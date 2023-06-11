@@ -68,6 +68,8 @@ export default class Component<
 
     this.componentDidMount();
 
+    this.setEvent();
+
     setCurrentObserver(null);
   }
 
@@ -138,6 +140,6 @@ export default class Component<
     func: EventListenerOrEventListenerObject
   ) {
     const element = this.$target.querySelector(selector) as any;
-    element[`on${eventName}`] = func;
+    if (element) element[`on${eventName}`] = func;
   }
 }
