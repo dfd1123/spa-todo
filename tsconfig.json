@@ -3,6 +3,7 @@
         "outDir": "./dist/",
         "paths": {
             "@/*": ["./src/*"],
+            "@styles/*": ["./src/styles/*"],
             "@components/*": ["./src/views/components/*"],
             "@pages/*": ["./src/views/pages/*"],
           },
