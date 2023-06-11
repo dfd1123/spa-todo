@@ -1,0 +1,17 @@
+@import 'var.scss';
+@import 'reset.scss'; 
+
+html, body{ margin: 0; box-sizing: border-box; }
+
+#app{
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 12px;
+}
+
+
+@media(max-width: 600px) {
+    #app{
+        padding: 12px;
+    }
+}
