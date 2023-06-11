@@ -135,7 +135,17 @@ export default class Component<
   }
 
   addEvent(
-    eventName: 'click' | 'input' | 'change' | 'keypress',
+    eventName:
+      | 'click'
+      | 'input'
+      | 'change'
+      | 'dragstart'
+      | 'dragover'
+      | 'dragenter'
+      | 'mousedown'
+      | 'mousemove'
+      | 'mouseup'
+      | 'keypress',
     selector: string,
     func: EventListenerOrEventListenerObject
   ) {
