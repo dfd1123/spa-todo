@@ -1,0 +1,35 @@
+[data-component="Tab"]{
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+    
+   .tab{
+    display: flex;
+    cursor: pointer;
+    padding: 6px 8px;
+    font-size: 14px;
+    color: $gray-22;
+    border: transparent;
+    background-color: $gray-f0;
+    border: 1px solid $gray-99;
+    border-radius: 2px;
+    transition: c 0.2s;
+
+    &:hover{
+        background-color: $gray-e6;
+    }
+
+    &:active{
+        background-color: $gray-d6;
+    }
+
+    input{ display: none; }
+    input:checked{
+        ~ span{
+            color: $red;
+        }
+    }
+
+    
+   }
+}
