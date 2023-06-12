@@ -9,7 +9,9 @@ export default class TodoListWrap extends Component {
     if (!Array.isArray(this.$props.list))
       throw new Error('TodoListWrap props list type is not array!!');
 
-    this.$props.list.map((item: TodoItemType) => {
+    const { list = [] } = this.$props;
+
+    list.map((item: TodoItemType) => {
       this.addComponent(
         TodoItem,
         {
@@ -49,6 +51,7 @@ export default class TodoListWrap extends Component {
   }
   template() {
     const { list = [] } = this.$props;
+
     return `
             <ul class="todo-list-cont">
             ${

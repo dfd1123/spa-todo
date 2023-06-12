@@ -6,9 +6,13 @@
         -webkit-user-drag: none;
         }
     }
-    [data-component="TodoItem"]{
-        user-select: none;
-        &.drag-target{
+}
+
+
+[data-component="TodoItem"]{
+    user-select: none;
+    &.drag-target, &.mirror{
+        .todo-item{
             position:relative;
             &::after{
                 content: '';
@@ -21,11 +25,11 @@
                 background-color: greenyellow;
             }
         }
-        &.preview{
-            opacity: 0.4;
-        }
-        &.mirror{
-            opacity: 0.6;
-        }
+    }
+    &.preview{
+        opacity: 0.4;
+    }
+    &.mirror{
+        opacity: 0.6;
     }
 }

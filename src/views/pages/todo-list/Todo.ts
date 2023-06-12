@@ -38,6 +38,8 @@ export default class Todo extends Component {
       list,
       filterKind,
       handleFilterKind: (kind: FilterKind) => this.handleFilterKind(kind),
+      handleUpdateList: (newList: TodoItemType[]) =>
+        this.handleUpdateList(newList),
     });
   }
   handleFilterKind(filterKind: FilterKind) {
