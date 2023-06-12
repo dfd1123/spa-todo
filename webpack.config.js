@@ -11,6 +11,7 @@ const webpackMode = process.env.NODE_ENV || 'development';
 
 module.exports = {
 	mode: webpackMode,
+	devtool: 'source-map',
 	entry: {
 		main: './src/main.ts',
 	},
@@ -18,15 +19,15 @@ module.exports = {
 		extensions: [".ts", ".js"],
 		alias: {
 			'@': path.resolve(__dirname, './src'),
-            '@styles': path.resolve(__dirname, './src/styles'),
+			'@styles': path.resolve(__dirname, './src/styles'),
 			'@components': path.resolve(__dirname, './src/views/components'),
 			'@pages': path.resolve(__dirname, './src/views/pages'),
 		},
 	},
 	output: {
-		path: path.resolve('./dist'),
+		path: path.resolve(__dirname, 'dist'),
 		publicPath: '/',
-		filename: '[name].min.js'
+		filename: '[name].js'
 	},
 	devServer: {
 		// contentBase: path.join(__dirname, "./public"),
@@ -90,6 +91,7 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: './public/index.html',
+			publicPath: '/',
 			minify: process.env.NODE_ENV === 'production' ? {
 				collapseWhitespace: true,
 				removeComments: true,

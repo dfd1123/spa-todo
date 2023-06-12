@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress",
-    "start": "webpack serve --progress"
+    "dev": "webpack serve --progress"
   },
   "author": "dfd1123",
   "license": "ISC",
