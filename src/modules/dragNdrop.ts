@@ -35,6 +35,8 @@ export default class DragDrop {
       el.classList.add(DRAG_ITEM_CLASSNAME);
     });
 
+    this.prevDragListArr = [...this.dragListArr];
+
     this.init();
   }
 
