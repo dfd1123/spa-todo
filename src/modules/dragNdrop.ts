@@ -7,6 +7,7 @@ const DRAG_MIRROR_CLASSNAME = 'mirror';
 export default class DragDrop {
   private listSelector: string;
   private $listContEl: HTMLElement;
+  private prevDragListArr: HTMLElement[];
   private dragListArr: HTMLElement[];
   private isDragging = false;
   private $draggedItem: HTMLElement;
@@ -63,6 +64,7 @@ export default class DragDrop {
   }
 
   setDragTargetPosition(target: HTMLElement) {
+    this.prevDragListArr = [...this.dragListArr];
     const targetIndex = this.dragListArr.indexOf(target);
 
     if (targetIndex > -1 && this.$draggedItem && target !== this.$draggedItem) {
@@ -138,6 +140,8 @@ export default class DragDrop {
   handleKeyEscape(event: KeyboardEvent) {
     if (this.isDragging && event.key === 'Escape') {
       this.resetDragStatus();
+      this.dragListArr = [...this.prevDragListArr];
+      this.onListChangeTrigger();
     }
   }
 
@@ -165,9 +169,8 @@ export default class DragDrop {
 
       this.translateX += event.movementX;
 
-      this.$mirrorElement.style.transform = `translate(${this.translateX}px, ${
-        event.clientY - this.initialY
-      }px)`;
+      this.$mirrorElement.style.transform = `translate(${this.translateX}px, ${event.clientY - this.initialY
+        }px)`;
 
       const target = this.getClosetDraggableTarget(event);
 
