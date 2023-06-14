@@ -6,6 +6,7 @@ import TodoListController, {
   FilterKind,
 } from '@components/todo-list/TodoListController';
 import { TodoItemType } from '@components/todo-list/TodoItem';
+import { getCookie, setCookie } from '@/modules/Cookie';
 
 type StateType = {
   filterKind: FilterKind;
@@ -16,7 +17,7 @@ export default class Todo extends Component {
   data(): StateType {
     return {
       filterKind: 'all',
-      list: [{ id: 1, name: '3', completed: false }],
+      list: getCookie('todoList'),
     };
   }
   componentDidMount() {
@@ -66,16 +67,16 @@ export default class Todo extends Component {
         ? this.$state.list[this.$state.list.length - 1].id
         : 0;
 
-    this.setState({
-      ...this.$state,
-      text: '',
-      list: [
-        ...this.$state.list,
-        { id: lastItemId + 1, name: value, completed: false },
-      ],
-    });
+    const newList = [
+      ...this.$state.list,
+      { id: lastItemId + 1, name: value, completed: false },
+    ];
+
+    this.handleUpdateList(newList)
   }
   handleUpdateList(list: TodoItemType[]) {
+    setCookie('todoList', list, 30);
+
     this.setState({
       ...this.$state,
       list,
