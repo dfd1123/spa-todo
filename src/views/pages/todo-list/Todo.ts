@@ -31,7 +31,8 @@ export default class Todo extends Component {
       },
     });
     this.addComponent(TodoListWrap, {
-      list: this.filterShowList(),
+      list,
+      filterKind,
       handleUpdateList: (newList: TodoItemType[]) =>
         this.handleUpdateList(newList),
     });
@@ -45,19 +46,6 @@ export default class Todo extends Component {
   }
   handleFilterKind(filterKind: FilterKind) {
     this.setState({ ...this.$state, filterKind });
-  }
-  filterShowList() {
-    const { list, filterKind } = this.$state;
-
-    switch (filterKind) {
-      case 'active':
-        return list.filter((item) => !item.completed);
-      case 'completed':
-        return list.filter((item) => item.completed);
-      case 'all':
-      default:
-        return list;
-    }
   }
   handleTodoAdd(value: string) {
     if (!value) return;

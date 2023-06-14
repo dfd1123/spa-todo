@@ -3,6 +3,7 @@ import './TodoListWrap.scss';
 import TodoItem, { TodoItemType } from './TodoItem';
 import NoData from '../common/NoData';
 import DragDrop from '@/modules/dragNdrop';
+import { FilterKind } from './TodoListController';
 
 export default class TodoListWrap extends Component {
   componentDidMount() {
@@ -25,6 +26,19 @@ export default class TodoListWrap extends Component {
     });
 
     this.addComponent(NoData, { text: 'No data matching the criteria' });
+  }
+  filterShowList() {
+    const { list, filterKind } = this.$props;
+
+    switch (filterKind) {
+      case 'active':
+        return list.filter((item: TodoItemType) => !item.completed);
+      case 'completed':
+        return list.filter((item: TodoItemType) => item.completed);
+      case 'all':
+      default:
+        return list;
+    }
   }
   deleteTodoItem(todoId: number) {
     const { list, handleUpdateList } = this.$props;
@@ -50,24 +64,21 @@ export default class TodoListWrap extends Component {
     handleUpdateList && handleUpdateList(newList);
   }
   template() {
-    const { list = [] } = this.$props;
+    const list = this.filterShowList();
 
     return `
             <ul class="todo-list-cont">
-            ${
-              list.length
-                ? list
-                    .map(
-                      (item: TodoItemType) =>
-                        `<li key="${
-                          item.id
-                        }" data-component="TodoItem" class="todo-item" data-drag-id="${
-                          item.id
-                        }" draggable="${!item.completed}"></li>`
-                    )
-                    .join('')
-                : '<div data-component="NoData"></div>'
-            }
+            ${list.length
+        ? list
+          .map(
+            (item: TodoItemType) =>
+              `<li key="${item.id
+              }" data-component="TodoItem" class="todo-item" data-drag-id="${item.id
+              }" draggable="${!item.completed}"></li>`
+          )
+          .join('')
+        : '<div data-component="NoData"></div>'
+      }
             </ul>
         `;
   }
